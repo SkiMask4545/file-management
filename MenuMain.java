@@ -1,47 +1,39 @@
 import java.util.Scanner;
 
-public class Menu {
+public class MenuMain {
 
     public static void diplay(Scanner scanner) {
         while (true) {
-            System.out.println("Menu");
-            System.out.println("1. File");
-            System.out.println("2. Edit");
-            System.out.println("3. View");
-            System.out.println("4. Exit");
-            System.out.print(">");
+            System.out.println("\nMAIN MENU\n1. File\n2. Edit\n3. View\n4. Exit");
+            System.out.print("\n>");
             String line = scanner.nextLine().trim();
             
             switch (line) {
                 case "1":
                     while (true) {
-                        System.out.println("File");
-                        System.out.println("1. New");
-                        System.out.println("2. Open");
-                        System.out.println("3. Delete");
-                        System.out.println("4. Return to the Menu");
-                        System.out.print(">");
+                        System.out.println("\nFILE\n1. New\n2. Open\n3. Delete\n4. Return to the Main Menu");
+                        System.out.print("\n>");
                         line = scanner.nextLine().trim();
                     
                         switch (line) {
                             case "1":
-                            File.fileNew(scanner);
+                            MenuFile.fileNew(scanner);
                             break;
 
                             case "2":
-                            File.fileOpen(scanner);
+                            MenuFile.fileOpen(scanner);
                             break;
 
                             case "3":
-                            File.fileDelete(scanner);
+                            MenuFile.fileDelete(scanner);
                             break;
 
                             case "4":
-                            System.out.println("Returning to the Menu...");
+                            System.out.println("\nReturning to the Main Menu...");
                             break;
 
                             default:
-                            System.out.println("Unknown command!");
+                            System.out.println("\nUnknown command!");
                         }
                         if (line.equals("4")) {
                             break;
@@ -51,33 +43,29 @@ public class Menu {
 
                 case "2":
                     while (true) {
-                        System.out.println("Edit");
-                        System.out.println("1. Add");
-                        System.out.println("2. Change");
-                        System.out.println("3. Erase");
-                        System.out.println("4. Return to the Menu");
-                        System.out.print(">");
+                        System.out.println("\nEDIT\n1. Add\n2. Change\n3. Erase\n4. Return to the Main Menu");
+                        System.out.print("\n>");
                         line = scanner.nextLine().trim();
                     
                         switch (line) {
                             case "1":
-                            Edit.editAdd(scanner);
+                            MenuEdit.editAdd(scanner);
                             break;
 
                             case "2":
-                            Edit.editChange(scanner);
+                            MenuEdit.editChange(scanner);
                             break;
 
                             case "3":
-                            Edit.editErase(scanner);
+                            MenuEdit.editErase(scanner);
                             break;
 
                             case "4":
-                            System.out.println("Returning to the Menu...");
+                            System.out.println("\nReturning to the Menu...");
                             break;
 
                             default:
-                            System.out.println("Unknown command!");
+                            System.out.println("\nUnknown command!");
                         }
                         if (line.equals("4")) {
                             break;
@@ -87,28 +75,25 @@ public class Menu {
 
                 case "3":
                     while (true) {
-                        System.out.println("View");
-                        System.out.println("1. Show all");
-                        System.out.println("2. Display employees who have less than 10 years of experience");
-                        System.out.println("3. Return to the Menu");
-                        System.out.print(">");
+                        System.out.println("\nVIEW\n1. Show all\n2. Display employees who have less than 10 years of experience\n3. Return to the Menu");
+                        System.out.print("\n>");
                         line = scanner.nextLine().trim();
                     
                         switch (line) {
                             case "1":
-                            View.viewShowAll();
+                            MenuView.viewShowAll();
                             break;
 
                             case "2":
-                            View.viewShowExp();
+                            MenuView.viewShowExp();
                             break;
 
                             case "3":
-                            System.out.println("Returning to the Menu...");
+                            System.out.println("\nReturning to the Menu...");
                             break;
 
                             default:
-                            System.out.println("Unknown command");
+                            System.out.println("\nUnknown command");
                         }
                         if (line.equals("3")) {
                             break;
@@ -117,12 +102,12 @@ public class Menu {
                     break;
 
                 case "4":
-                    System.out.println("Shutting down...");
+                    System.out.println("\nShutting down...\n");
                     System.exit(0);
                     break;
 
                 default:
-                    System.out.println("Unknown command!");
+                    System.out.println("\nUnknown command!");
             }
         }
     }

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Edit {
+public class MenuEdit {
         
     public static void editAdd(Scanner scanner) {
 

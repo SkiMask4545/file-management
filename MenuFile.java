@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class File {
+public class MenuFile {
     
     public static void fileNew(Scanner scanner) {
 

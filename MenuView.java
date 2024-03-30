@@ -1,4 +1,4 @@
-public class View {
+public class MenuView {
         
     public static void viewShowAll() {
 
