@@ -52,7 +52,7 @@ public class FileController {
             }
         }
     }
-
+    @SuppressWarnings("unchecked")
     public static void fileOpen(Scanner scanner) {
         if (filePath != null) {
             System.out.println("\nAlready open: " +getFileName() + "!");
