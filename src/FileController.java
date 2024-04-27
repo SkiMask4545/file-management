@@ -30,8 +30,8 @@ public class FileController {
         if (fileName.length() == 0) {
             System.out.println("\nFile name can not be empty!");
         } else {
-            fileName = fileName + ".employee";
-            File file = new File("employee/" + fileName);
+            fileName = fileName + ".employees";
+            File file = new File("employees/" + fileName);
         
             if (file.exists()) {
                 System.out.println("\nFile already exists: " + fileName + "!");
@@ -57,7 +57,7 @@ public class FileController {
         if (filePath != null) {
             System.out.println("\nAlready open: " +getFileName() + "!");
         } else {
-            File folder = new File("employee");
+            File folder = new File("employees");
             File[] list = folder.listFiles();
             
             if (list == null || list.length == 0) {
@@ -83,7 +83,7 @@ public class FileController {
                             System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
                         } else {
                             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));) {
-                                DataController.setList((ArrayList<Employee>) ois.readObject());
+                                DataController.setList((ArrayList<Employees>) ois.readObject());
                                 System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
                             } catch (Exception e) {
                                 System.out.println("\nAn error has occurred!\n");
@@ -123,7 +123,7 @@ public class FileController {
     }
 
     public static void fileDelete(Scanner scanner) {
-        File folder = new File("employee");
+        File folder = new File("employees");
         File[] list = folder.listFiles();
         
         if (list == null || list.length == 0) {
