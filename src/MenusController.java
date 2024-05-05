@@ -17,7 +17,7 @@ public class MenusController {
             + "\n2. Open"
             + "\n3. Save and Close"
             + "\n4. Delete"
-            + "\n5. Return to the Menu");
+            + "\n5. Return");
         System.out.print("\n>");
     }
 
@@ -28,7 +28,7 @@ public class MenusController {
             + "\n3. Remove"
             + "\n4. Show All"
             + "\n5. Show Unexperienced"
-            + "\n6. Return to the Menu");
+            + "\n6. Return");
         System.out.print("\n>");
     }
 
@@ -37,7 +37,7 @@ public class MenusController {
     }
 
     public static void printReturn() {
-        System.out.println("\nReturning to the Menu...");
+        System.out.println("\nReturning...");
     }
 
     private static void printExit() {

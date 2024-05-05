@@ -2,37 +2,37 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class DataController {
-    private static Watches watches = new Watches();
+    private static Employees employees = new Employees();
 
     public static Watches getData() {
-        return watches;
+        return employees;
     }
 
-    public static void setData(Watches watches) {
-        DataController.watches = watches;
+    public static void setData(Watches employees) {
+        DataController.employees = employees;
     }
 
     public static void clearData() {
-        watches.getList().clear();
-        watches.setIdCounter(1);
+        employees.getArrayList().clear();
+        employees.setIdCounter(1);
     }
         
     public static void dataAdd(Scanner scanner) {
         if (FilesController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else { 
-            Watch watch = new Watch();
+            Employee employee = new Employee();
 
-            watch.setId(watches.getIdCounter());
+            employee.setId(employees.getIdCounter());
 
             System.out.print("\nInput Surname: ");
-            watch.setSurname(scanner.nextLine().trim());
+            employee.setSurname(scanner.nextLine().trim());
 
             System.out.print("Input Name: ");
-            watch.setName(scanner.nextLine().trim());
+            employee.setName(scanner.nextLine().trim());
 
             System.out.print("Input Title: ");
-            watch.setTitle(scanner.nextLine().trim());
+            employee.setTitle(scanner.nextLine().trim());
 
             System.out.print("Input Salary: ");
             Double salary;
@@ -41,7 +41,7 @@ public class DataController {
                 salary = Double.valueOf(scanner.nextLine().trim());
 
                 if (salary >= 0) {
-                    watch.setSalary(salary);
+                    employee.setSalary(salary);
                 } else {
                     MenusController.printInvalid();
                     System.out.println();
@@ -59,7 +59,7 @@ public class DataController {
                 experience = Integer.valueOf(scanner.nextLine().trim());
 
                 if (experience >= 0) {
-                    watch.setExperience(experience);
+                    employee.setExperience(experience);
                 } else {
                     MenusController.printInvalid();
                     System.out.println();
@@ -71,14 +71,14 @@ public class DataController {
             }
 
             System.out.print("Input City: ");
-            watch.setCity(scanner.nextLine().trim());
+            employee.setCity(scanner.nextLine().trim());
 
-            if (watches.getList().add(watch)) {
-                System.out.println("\nSuccessfully added: " + watch.getName() + " " + watch.getSurname() + "!");
+            if (employees.getArrayList().add(employee)) {
+                System.out.println("\nSuccessfully added: " + employee.getName() + " " + employee.getSurname() + "!");
 
-                watches.setIdCounter(watches.getIdCounter() + 1);
+                employees.setIdCounter(employees.getIdCounter() + 1);
             } else {
-                System.out.println("\nWas not added: " + watch.getName() + " " + watch.getSurname() + "!");
+                System.out.println("\nWas not added: " + employee.getName() + " " + employee.getSurname() + "!");
             }
         }
     }
@@ -87,16 +87,16 @@ public class DataController {
         if (FilesController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (watches.getList().size() == 0) {
-                System.out.println("\nNo watches found!");
+            if (employees.getArrayList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < watches.getList().size(); i++) {
-                    System.out.println((i + 1) + ". " + watches.getList().get(i).getName() + " " + watches.getList().get(i).getSurname());
+                for (int i = 0; i < employees.getArrayList().size(); i++) {
+                    System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
                 }
                 
-                System.out.println((watches.getList().size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getArrayList().size() + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -104,19 +104,19 @@ public class DataController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < watches.getList().size()) {
-                        Watch watch = watches.getList().get(i);
+                    if (i >= 0 && i < employees.getArrayList().size()) {
+                        Employee employee = employees.getArrayList().get(i);
 
-                        watch.setId(watches.getList().get(i).getId());
+                        employee.setId(employees.getArrayList().get(i).getId());
             
                         System.out.print("\nInput Surname: ");
-                        watch.setSurname(scanner.nextLine().trim());
+                        employee.setSurname(scanner.nextLine().trim());
             
                         System.out.print("Input Name: ");
-                        watch.setName(scanner.nextLine().trim());
+                        employee.setName(scanner.nextLine().trim());
             
                         System.out.print("Input Title: ");
-                        watch.setTitle(scanner.nextLine().trim());
+                        employee.setTitle(scanner.nextLine().trim());
             
                         System.out.print("Input Salary: ");
                         Double salary;
@@ -125,7 +125,7 @@ public class DataController {
                             salary = Double.valueOf(scanner.nextLine().trim());
             
                             if (salary >= 0) {
-                                watch.setSalary(salary);
+                                employee.setSalary(salary);
                             } else {
                                 MenusController.printInvalid();
                                 System.out.println();
@@ -143,7 +143,7 @@ public class DataController {
                             experience = Integer.valueOf(scanner.nextLine().trim());
             
                             if (experience >= 0) {
-                                watch.setExperience(experience);
+                                employee.setExperience(experience);
                             } else {
                                 MenusController.printInvalid();
                                 System.out.println();
@@ -155,10 +155,10 @@ public class DataController {
                         }
             
                         System.out.print("Input City: ");
-                        watch.setCity(scanner.nextLine().trim());
+                        employee.setCity(scanner.nextLine().trim());
                         
-                        System.out.println("\nSuccessfully changed: " + watch.getName() + " " + watch.getSurname() + "!");
-                    } else if (i == watches.getList().size()) {
+                        System.out.println("\nSuccessfully changed: " + employee.getName() + " " + employee.getSurname() + "!");
+                    } else if (i == employees.getArrayList().size()) {
                         MenusController.printReturn();
                     } else {
                         MenusController.printInvalid();
@@ -175,16 +175,16 @@ public class DataController {
         if (FilesController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (watches.getList().size() == 0) {
-                System.out.println("\nNo watches found!");
+            if (employees.getArrayList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < watches.getList().size(); i++) {
-                    System.out.println((i + 1) + ". " + watches.getList().get(i).getName() + " " + watches.getList().get(i).getSurname());
+                for (int i = 0; i < employees.getArrayList().size(); i++) {
+                    System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
                 }
                 
-                System.out.println((watches.getList().size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getArrayList().size() + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -192,8 +192,8 @@ public class DataController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < watches.getList().size()) {
-                        System.out.println("\nAre you sure to remove: " + watches.getList().get(i).getName() + " " + watches.getList().get(i).getSurname() + "?"
+                    if (i >= 0 && i < employees.getArrayList().size()) {
+                        System.out.println("\nAre you sure to remove: " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname() + "?"
                         + "\n1. Yes"
                         + "\n2. No");
                         System.out.print("\n>");
@@ -201,18 +201,18 @@ public class DataController {
 
                         switch (line) {
                             case "1":
-                            System.out.println("\nSuccessfully removed: " + watches.getList().get(i).getName() + " " + watches.getList().get(i).getSurname() + "!");
-                            watches.getList().remove(i.intValue());
+                            System.out.println("\nSuccessfully removed: " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname() + "!");
+                            employees.getArrayList().remove(i.intValue());
                             break;
 
                             case "2":
-                            System.out.println("\nWas not removed: " + watches.getList().get(i).getName() + " " + watches.getList().get(i).getSurname() + "!");
+                            System.out.println("\nWas not removed: " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname() + "!");
                             break;
 
                             default:
                             MenusController.printInvalid();
                         }
-                    } else if (i == watches.getList().size()) {
+                    } else if (i == employees.getArrayList().size()) {
                         MenusController.printReturn();
                     } else {
                         MenusController.printInvalid();
@@ -229,16 +229,16 @@ public class DataController {
         if (FilesController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (watches.getList().size() == 0) {
-                System.out.println("\nNo watches found!");
+            if (employees.getArrayList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < watches.getList().size(); i++) {
-                    System.out.println((i + 1) + ". " + watches.getList().get(i).getName() + " " + watches.getList().get(i).getSurname());
+                for (int i = 0; i < employees.getArrayList().size(); i++) {
+                    System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
                 }
                 
-                System.out.println((watches.getList().size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getArrayList().size() + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -246,18 +246,18 @@ public class DataController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < watches.getList().size()) {
-                        Watch watch = watches.getList().get(i);
+                    if (i >= 0 && i < employees.getArrayList().size()) {
+                        Employee employee = employees.getArrayList().get(i);
 
-                        System.out.println("\n1. ID: " + watch.getId()
-                        + "\n2. Surname: " + watch.getSurname()
-                        + "\n3. Name: " + watch.getName()
-                        + "\n4. Title: " + watch.getTitle()
-                        + "\n5. Salary: " + watch.getSalary()
-                        + "\n6. Experience: " + watch.getExperience()
-                        + "\n7. City: " + watch.getCity());
+                        System.out.println("\n1. ID: " + employee.getId()
+                        + "\n2. Surname: " + employee.getSurname()
+                        + "\n3. Name: " + employee.getName()
+                        + "\n4. Title: " + employee.getTitle()
+                        + "\n5. Salary: " + employee.getSalary()
+                        + "\n6. Experience: " + employee.getExperience()
+                        + "\n7. City: " + employee.getCity());
                         
-                    } else if (i == watches.getList().size()) {
+                    } else if (i == employees.getArrayList().size()) {
                         MenusController.printReturn();
                     } else {
                         MenusController.printInvalid();
@@ -274,27 +274,27 @@ public class DataController {
         if (FilesController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (watches.getList().size() == 0) {
-                System.out.println("\nNo watches found!");
+            if (employees.getArrayList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
-                ArrayList<Watch> listUnexperienced = new ArrayList<>();
+                ArrayList<Employee> arrayListUnexperienced = new ArrayList<>();
 
-                for (int i = 0; i < watches.getList().size(); i++) {
-                    if (watches.getList().get(i).getExperience() < 10) {
-                        listUnexperienced.add(watches.getList().get(i));
+                for (int i = 0; i < employees.getArrayList().size(); i++) {
+                    if (employees.getArrayList().get(i).getExperience() < 10) {
+                        arrayListUnexperienced.add(employees.getArrayList().get(i));
                     }
                 }
 
-                if (listUnexperienced.size() == 0) {
-                    System.out.println("\nNo watches found!");
+                if (arrayListUnexperienced.size() == 0) {
+                    System.out.println("\nNo employees found!");
                 } else {
                     System.out.println();
         
-                    for (int i = 0; i < listUnexperienced.size(); i++) {
-                        System.out.println((i + 1) + ". " + listUnexperienced.get(i).getName() + " " + listUnexperienced.get(i).getSurname());
+                    for (int i = 0; i < arrayListUnexperienced.size(); i++) {
+                        System.out.println((i + 1) + ". " + arrayListUnexperienced.get(i).getName() + " " + arrayListUnexperienced.get(i).getSurname());
                     }
                     
-                    System.out.println((listUnexperienced.size() + 1) + ". Return to the Menu");
+                    System.out.println((arrayListUnexperienced.size() + 1) + ". Return");
                     System.out.print("\n>");
                     String line = scanner.nextLine().trim();
                     Integer i;
@@ -302,18 +302,18 @@ public class DataController {
                     try {
                         i = Integer.valueOf(line) - 1;
         
-                        if (i >= 0 && i < listUnexperienced.size()) {
-                            Watch watch = listUnexperienced.get(i);
+                        if (i >= 0 && i < arrayListUnexperienced.size()) {
+                            Employee employee = arrayListUnexperienced.get(i);
 
-                            System.out.println("\n1. ID: " + watch.getId()
-                            + "\n2. Surname: " + watch.getSurname()
-                            + "\n3. Name: " + watch.getName()
-                            + "\n4. Ttile: " + watch.getTitle()
-                            + "\n5. Salary: " + watch.getSalary()
-                            + "\n6. Experience: " + watch.getExperience()
-                            + "\n7. City: " + watch.getCity());
+                            System.out.println("\n1. ID: " + employee.getId()
+                            + "\n2. Surname: " + employee.getSurname()
+                            + "\n3. Name: " + employee.getName()
+                            + "\n4. Ttile: " + employee.getTitle()
+                            + "\n5. Salary: " + employee.getSalary()
+                            + "\n6. Experience: " + employee.getExperience()
+                            + "\n7. City: " + employee.getCity());
                             
-                        } else if (i == listUnexperienced.size()) {
+                        } else if (i == arrayListUnexperienced.size()) {
                             MenusController.printReturn();
                         } else {
                             MenusController.printInvalid();

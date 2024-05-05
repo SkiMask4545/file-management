@@ -1,4 +1,4 @@
-public class SamsungSmartWatche extends SmartWatch {
+public class WatchSmartSamsung extends WatchSmart {
     enum PresenceOfAOD {
         YES("Yes"),
         NO("No");

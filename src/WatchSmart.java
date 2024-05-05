@@ -1,4 +1,4 @@
-public class SmartWatch extends Watch {
+public class WatchSmart extends Watch {
     enum UsedOS {
         WATCHOS("watchOS"),
         WEAROS("Wear OS");
