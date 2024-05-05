@@ -96,7 +96,7 @@ public class DataController {
                     System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
                 }
                 
-                System.out.println((employees.getArrayList().size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getArrayList().size() + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -184,7 +184,7 @@ public class DataController {
                     System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
                 }
                 
-                System.out.println((employees.getArrayList().size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getArrayList().size() + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -238,7 +238,7 @@ public class DataController {
                     System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
                 }
                 
-                System.out.println((employees.getArrayList().size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getArrayList().size() + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -294,7 +294,7 @@ public class DataController {
                         System.out.println((i + 1) + ". " + arrayListUnexperienced.get(i).getName() + " " + arrayListUnexperienced.get(i).getSurname());
                     }
                     
-                    System.out.println((arrayListUnexperienced.size() + 1) + ". Return to the Menu");
+                    System.out.println((arrayListUnexperienced.size() + 1) + ". Return");
                     System.out.print("\n>");
                     String line = scanner.nextLine().trim();
                     Integer i;

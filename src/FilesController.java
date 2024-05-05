@@ -67,7 +67,7 @@ public class FilesController {
                 for (int i = 0; i < filelist.length; i++) {
                     System.out.println((i + 1) + ". " + filelist[i].getName());
                 }
-                System.out.println((filelist.length + 1) + ". Return to the Menu");
+                System.out.println((filelist.length + 1) + ". Return");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -134,7 +134,7 @@ public class FilesController {
                 System.out.println((i + 1) + ". " + filelist[i].getName());
             }
 
-            System.out.println((filelist.length + 1) + ". Return to the Menu");
+            System.out.println((filelist.length + 1) + ". Return");
             System.out.print("\n>");
             String line = scanner.nextLine().trim();
             Integer i;
