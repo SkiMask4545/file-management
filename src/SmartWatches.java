@@ -20,15 +20,6 @@ public class SmartWatches extends Watches {
     private String technology;
     private UsedOS usedOS;
 
-    public SmartWatches() {
-    }
-
-    public SmartWatches(int newId, String newCompany, String newModel, Type newType, double newPrice, String newCountry, int newYear, String newTechnology, UsedOS newUsedOS) {
-        super(newId, newCompany, newModel, newType, newPrice, newCountry, newYear);
-        this.technology = newTechnology;
-        this.usedOS = newUsedOS;
-    }
-
     public String getTechnology() {
         return this.technology;
     }

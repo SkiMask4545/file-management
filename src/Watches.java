@@ -28,19 +28,6 @@ public class Watches implements Serializable {
     private String country;
     private int year;
 
-    public Watches() {
-    }
-
-    public Watches(int newId, String newCompany, String newModel, Type newType, double newPrice, String newCountry, int newYear) {
-        this.id = newId;
-        this.company = newCompany;
-        this.model = newModel;
-        this.type = newType;
-        this.price = newPrice;
-        this.country = newCountry;
-        this.year = newYear;
-    }
-
     public int getId() {
         return this.id;
     }
@@ -95,10 +82,6 @@ public class Watches implements Serializable {
 
     public void setYear(int newYear) {
         this.year = newYear;
-    }
-
-    public double priceToLei() {
-        return (this.price * 18.81);
     }
 
 }
