@@ -82,7 +82,7 @@ public class FileController {
                             System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
                         } else {
                             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));) {
-                                DataController.setData((Data) ois.readObject());
+                                DataController.setData((Employees) ois.readObject());
                                 System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
                             } catch (Exception e) {
                                 System.out.println("\nAn error has occurred!\n");
