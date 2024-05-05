@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class Employees implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private int id;
     private String surname;
@@ -39,31 +39,32 @@ public class Employees implements Serializable {
         return this.city;
     }
 
-    public void setId(int newId) {
-        this.id = newId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSurname(String newSurname) {
-        this.surname = newSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public void setName(String newName) {
-        this.name = newName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTitle(String newTitle) {
-        this.title = newTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setSalary(double newSalary) {
-        this.salary = newSalary;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
-    public void setExperience(int newExperience) {
-        this.experience = newExperience;
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
-    public void setCity(String newCity) {
-        this.city = newCity;
+    public void setCity(String city) {
+        this.city = city;
     }
+    
 }
