@@ -1,18 +1,19 @@
-public class SamsungSmartWatches extends SmartWatches {
+public class SamsungSmartWatche extends SmartWatch {
     enum PresenceOfAOD {
         YES("Yes"),
         NO("No");
 
-        private final String text;
+        private final String string;
 
-        PresenceOfAOD(final String newText) {
-            this.text = newText;
+        PresenceOfAOD(final String string) {
+            this.string = string;
         }
         
         @Override
         public String toString() {
-            return this.text;
+            return this.string;
         }
+
     }
     private static final long serialVersionUID = 3L;
 
@@ -27,12 +28,12 @@ public class SamsungSmartWatches extends SmartWatches {
         return this.presenceOfAOD;
     }
 
-    public void setWarranty(int newWarranty) {
-        this.warranty = newWarranty;
+    public void setWarranty(int warranty) {
+        this.warranty = warranty;
     }
 
-    public void setPresenceOfAOD(PresenceOfAOD newPresenceOfAOD) {
-        this.presenceOfAOD = newPresenceOfAOD;
+    public void setPresenceOfAOD(PresenceOfAOD presenceOfAOD) {
+        this.presenceOfAOD = presenceOfAOD;
     }
 
 }

@@ -1,18 +1,19 @@
-public class SmartWatches extends Watches {
+public class SmartWatch extends Watch {
     enum UsedOS {
         WATCHOS("watchOS"),
         WEAROS("Wear OS");
 
-        private final String text;
+        private final String string;
 
-        UsedOS(final String newText) {
-            this.text = newText;
+        UsedOS(final String string) {
+            this.string = string;
         }
         
         @Override
         public String toString() {
-            return this.text;
+            return this.string;
         }
+
     }
 
     private static final long serialVersionUID = 2L;
@@ -28,12 +29,12 @@ public class SmartWatches extends Watches {
         return this.usedOS;
     }
 
-    public void setTechnology(String newTechnology) {
-        this.technology = newTechnology;
+    public void setTechnology(String technology) {
+        this.technology = technology;
     }
 
-    public void setUsedOS(UsedOS newUsedOS) {
-        this.usedOS = newUsedOS;
+    public void setUsedOS(UsedOS usedOS) {
+        this.usedOS = usedOS;
     }
 
 }
