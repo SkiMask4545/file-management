@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 
-public class FileController {
+public class FilesController {
     private static String filePath;
 
     public static String getFilePath() {
@@ -30,7 +30,7 @@ public class FileController {
             System.out.println("\nFile name can not be empty!");
         } else {
             fileName = fileName + ".data";
-            File file = new File("data/" + fileName);
+            File file = new File("files/" + fileName);
         
             if (file.exists()) {
                 System.out.println("\nFile already exists: " + fileName + "!");
@@ -56,18 +56,18 @@ public class FileController {
         if (filePath != null) {
             System.out.println("\nAlready open: " +getFileName() + "!");
         } else {
-            File folder = new File("data");
-            File[] list = folder.listFiles();
+            File filefolder = new File("files");
+            File[] filelist = filefolder.listFiles();
             
-            if (list == null || list.length == 0) {
+            if (filelist == null || filelist.length == 0) {
                 System.out.println("\nNo files found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < list.length; i++) {
-                    System.out.println((i + 1) + ". " + list[i].getName());
+                for (int i = 0; i < filelist.length; i++) {
+                    System.out.println((i + 1) + ". " + filelist[i].getName());
                 }
-                System.out.println((list.length + 1) + ". Return to the Menu");
+                System.out.println((filelist.length + 1) + ". Return to the Menu");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -75,25 +75,25 @@ public class FileController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < list.length) {
-                        filePath = list[i].getCanonicalPath();
+                    if (i >= 0 && i < filelist.length) {
+                        filePath = filelist[i].getCanonicalPath();
 
                         if (getFileLength() == 0) {
-                            System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
+                            System.out.println("\nSuccessfully opened: " + filelist[i].getName() + "!");
                         } else {
                             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));) {
                                 DataController.setData((Employees) ois.readObject());
-                                System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
+                                System.out.println("\nSuccessfully opened: " + filelist[i].getName() + "!");
                             } catch (Exception e) {
                                 System.out.println("\nAn error has occurred!\n");
                                 System.out.println(e.getMessage());
                             }
                         }
 
-                    } else if (i == list.length) {
-                        MenuController.printReturn();
+                    } else if (i == filelist.length) {
+                        MenusController.printReturn();
                     } else {
-                        MenuController.printInvalid();
+                        MenusController.printInvalid();
                     }
 
                 } catch (Exception e) {
@@ -122,19 +122,19 @@ public class FileController {
     }
 
     public static void fileDelete(Scanner scanner) {
-        File folder = new File("data");
-        File[] list = folder.listFiles();
+        File filefolder = new File("files");
+        File[] filelist = filefolder.listFiles();
         
-        if (list == null || list.length == 0) {
+        if (filelist == null || filelist.length == 0) {
             System.out.println("\nNo files found!");
         } else {
             System.out.println();
 
-            for (int i = 0; i < list.length; i++) {
-                System.out.println((i + 1) + ". " + list[i].getName());
+            for (int i = 0; i < filelist.length; i++) {
+                System.out.println((i + 1) + ". " + filelist[i].getName());
             }
 
-            System.out.println((list.length + 1) + ". Return to the Menu");
+            System.out.println((filelist.length + 1) + ". Return to the Menu");
             System.out.print("\n>");
             String line = scanner.nextLine().trim();
             Integer i;
@@ -142,11 +142,11 @@ public class FileController {
             try {
                 i = Integer.valueOf(line) - 1;
 
-                if (i >= 0 && i < list.length) {
-                    if (filePath != null && filePath.equals(list[i].getCanonicalPath())) {
-                        System.out.println("\nAlready open: " + list[i].getName() + "!");
+                if (i >= 0 && i < filelist.length) {
+                    if (filePath != null && filePath.equals(filelist[i].getCanonicalPath())) {
+                        System.out.println("\nAlready open: " + filelist[i].getName() + "!");
                     } else {
-                        System.out.println("\nAre you sure to delete: " + list[i].getName() + "?"
+                        System.out.println("\nAre you sure to delete: " + filelist[i].getName() + "?"
                         + "\n1. Yes"
                         + "\n2. No");
                         System.out.print("\n>");
@@ -154,25 +154,25 @@ public class FileController {
 
                         switch (line) {
                             case "1":
-                            if (list[i].delete()) {
-                                System.out.println("\nSuccessfully deleted: " + list[i].getName() + "!");
+                            if (filelist[i].delete()) {
+                                System.out.println("\nSuccessfully deleted: " + filelist[i].getName() + "!");
                             } else {
-                                System.out.println("\nWas not deleted: " + list[i].getName() + "!");
+                                System.out.println("\nWas not deleted: " + filelist[i].getName() + "!");
                             }
                             break;
 
                             case "2":
-                            System.out.println("\nWas not deleted: " + list[i].getName() + "!");
+                            System.out.println("\nWas not deleted: " + filelist[i].getName() + "!");
                             break;
 
                             default:
-                            MenuController.printInvalid();
+                            MenusController.printInvalid();
                         }
                     }
-                } else if (i == list.length) {
-                    MenuController.printReturn();
+                } else if (i == filelist.length) {
+                    MenusController.printReturn();
                 } else {
-                    MenuController.printInvalid();
+                    MenusController.printInvalid();
                 }
             } catch (Exception e) {
                 System.out.println("\nAn error has occurred!\n");

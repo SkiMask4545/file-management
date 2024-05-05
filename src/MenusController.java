@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class MenuController {
+public class MenusController {
     private static Scanner scanner = new Scanner(System.in);
 
     private static void printMainMenu() {
@@ -45,8 +45,8 @@ public class MenuController {
     }
 
     private static void exit() {
-        if (FileController.getFilePath() != null) {
-            System.out.println("\nAre you sure to exit without saving: " + FileController.getFileName() + "?"
+        if (FilesController.getFilePath() != null) {
+            System.out.println("\nAre you sure to exit without saving: " + FilesController.getFileName() + "?"
             + "\n1. Yes"
             + "\n2. No");
             System.out.print("\n>");
@@ -71,71 +71,6 @@ public class MenuController {
             scanner.close();
             System.exit(0);
         }
-    }
-
-    public static void display() {
-        switchMainMenu();
-    }
-
-    static void switchMainMenu() {
-        while (true) {
-            printMainMenu();
-            String line = scanner.nextLine().trim();
-            
-            switch (line) {
-                case "1":
-                    switchFileMenu();
-                    break;
-
-                case "2":
-                    switchDataMenu();
-                    break;
-
-                case "3":
-                    exit();
-                    break;
-
-                default:
-                    printInvalid();
-            }
-        }
-    }
-
-    static void switchFileMenu() {
-        while (true) {
-            printFileMenu();
-            String line = scanner.nextLine().trim();
-        
-            switch (line) {
-                case "1":
-                FileController.fileNew(scanner);
-                break;
-
-                case "2":
-                FileController.fileOpen(scanner);
-                break;
-
-                case "3":
-                FileController.fileSaveAndClose();
-                break;
-
-                case "4":
-                FileController.fileDelete(scanner);
-                break;
-
-                case "5":
-                printReturn();
-                break;
-
-                default:
-                printInvalid();
-            }
-
-            if (line.equals("5")) {
-                break;
-            }
-        }
-
     }
 
     private static void switchDataMenu() {
@@ -177,6 +112,71 @@ public class MenuController {
             }
             
         }
+    }
+
+    static void switchFileMenu() {
+        while (true) {
+            printFileMenu();
+            String line = scanner.nextLine().trim();
+        
+            switch (line) {
+                case "1":
+                FilesController.fileNew(scanner);
+                break;
+
+                case "2":
+                FilesController.fileOpen(scanner);
+                break;
+
+                case "3":
+                FilesController.fileSaveAndClose();
+                break;
+
+                case "4":
+                FilesController.fileDelete(scanner);
+                break;
+
+                case "5":
+                printReturn();
+                break;
+
+                default:
+                printInvalid();
+            }
+
+            if (line.equals("5")) {
+                break;
+            }
+        }
+
+    }
+
+    static void switchMainMenu() {
+        while (true) {
+            printMainMenu();
+            String line = scanner.nextLine().trim();
+            
+            switch (line) {
+                case "1":
+                    switchFileMenu();
+                    break;
+
+                case "2":
+                    switchDataMenu();
+                    break;
+
+                case "3":
+                    exit();
+                    break;
+
+                default:
+                    printInvalid();
+            }
+        }
+    }
+
+    public static void display() {
+        switchMainMenu();
     }
 
 }
