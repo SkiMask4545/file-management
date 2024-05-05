@@ -2,18 +2,19 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class DataController {
-    private static ArrayList<Employee> list = new ArrayList<Employee>();
+    private static Employees employees = new Employees();
 
-    public static  ArrayList<Employee> getList() {
-        return list;
+    public static Employees getData() {
+        return employees;
     }
 
-    public static void setList(ArrayList<Employee> newList) {
-        list = newList;
+    public static void setData(Employees employees) {
+        DataController.employees = employees;
     }
 
-    public static void clearList() {
-        list.clear();
+    public static void clearData() {
+        employees.getList().clear();
+        employees.setIdCounter(1);
     }
         
     public static void dataAdd(Scanner scanner) {
@@ -22,7 +23,7 @@ public class DataController {
         } else { 
             Employee employee = new Employee();
 
-            employee.setId(list.size() + 1);
+            employee.setId(employees.getIdCounter());
 
             System.out.print("\nInput Surname: ");
             employee.setSurname(scanner.nextLine().trim());
@@ -72,10 +73,12 @@ public class DataController {
             System.out.print("Input City: ");
             employee.setCity(scanner.nextLine().trim());
 
-            if (list.add(employee)) {
-                System.out.println("\nSuccessfully added: " + employee.getName() + " " + employee.getSurname());
+            if (employees.getList().add(employee)) {
+                System.out.println("\nSuccessfully added: " + employee.getName() + " " + employee.getSurname() + "!");
+
+                employees.setIdCounter(employees.getIdCounter() + 1);
             } else {
-                System.out.println("\nWas not added: " + employee.getName() + " " + employee.getSurname());
+                System.out.println("\nWas not added: " + employee.getName() + " " + employee.getSurname() + "!");
             }
         }
     }
@@ -84,16 +87,16 @@ public class DataController {
         if (FileController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (list.size() == 0) {
-                System.out.println("\nNo data found!");
+            if (employees.getList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println((i + 1) + ". " + list.get(i).getName() + " " + list.get(i).getSurname());
+                for (int i = 0; i < employees.getList().size(); i++) {
+                    System.out.println((i + 1) + ". " + employees.getList().get(i).getName() + " " + employees.getList().get(i).getSurname());
                 }
                 
-                System.out.println((list.size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getList().size() + 1) + ". Return to the Menu");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -101,10 +104,10 @@ public class DataController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < list.size()) {
-                        Employee employee = list.get(i);
+                    if (i >= 0 && i < employees.getList().size()) {
+                        Employee employee = employees.getList().get(i);
 
-                        employee.setId(list.get(i).getId());
+                        employee.setId(employees.getList().get(i).getId());
             
                         System.out.print("\nInput Surname: ");
                         employee.setSurname(scanner.nextLine().trim());
@@ -154,8 +157,8 @@ public class DataController {
                         System.out.print("Input City: ");
                         employee.setCity(scanner.nextLine().trim());
                         
-                        System.out.println("\nSuccessfully changed: " + employee.getName() + " " + employee.getSurname());
-                    } else if (i == list.size()) {
+                        System.out.println("\nSuccessfully changed: " + employee.getName() + " " + employee.getSurname() + "!");
+                    } else if (i == employees.getList().size()) {
                         MenuController.printReturn();
                     } else {
                         MenuController.printInvalid();
@@ -172,16 +175,16 @@ public class DataController {
         if (FileController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (list.size() == 0) {
-                System.out.println("\nNo data found!");
+            if (employees.getList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println((i + 1) + ". " + list.get(i).getName() + " " + list.get(i).getSurname());
+                for (int i = 0; i < employees.getList().size(); i++) {
+                    System.out.println((i + 1) + ". " + employees.getList().get(i).getName() + " " + employees.getList().get(i).getSurname());
                 }
                 
-                System.out.println((list.size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getList().size() + 1) + ". Return to the Menu");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -189,8 +192,8 @@ public class DataController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < list.size()) {
-                        System.out.println("\nAre you sure to remove: " + list.get(i).getName() + " " + list.get(i).getSurname() + "?"
+                    if (i >= 0 && i < employees.getList().size()) {
+                        System.out.println("\nAre you sure to remove: " + employees.getList().get(i).getName() + " " + employees.getList().get(i).getSurname() + "?"
                         + "\n1. Yes"
                         + "\n2. No");
                         System.out.print("\n>");
@@ -198,18 +201,18 @@ public class DataController {
 
                         switch (line) {
                             case "1":
-                            System.out.println("\nSuccessfully removed: " + list.get(i).getName() + " " + list.get(i).getSurname());
-                            list.remove(i.intValue());
+                            System.out.println("\nSuccessfully removed: " + employees.getList().get(i).getName() + " " + employees.getList().get(i).getSurname() + "!");
+                            employees.getList().remove(i.intValue());
                             break;
 
                             case "2":
-                            System.out.println("\nWas not removed: " + list.get(i).getName() + " " + list.get(i).getSurname() + "!");
+                            System.out.println("\nWas not removed: " + employees.getList().get(i).getName() + " " + employees.getList().get(i).getSurname() + "!");
                             break;
 
                             default:
                             MenuController.printInvalid();
                         }
-                    } else if (i == list.size()) {
+                    } else if (i == employees.getList().size()) {
                         MenuController.printReturn();
                     } else {
                         MenuController.printInvalid();
@@ -226,16 +229,16 @@ public class DataController {
         if (FileController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (list.size() == 0) {
-                System.out.println("\nNo data found!");
+            if (employees.getList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
                 System.out.println();
     
-                for (int i = 0; i < list.size(); i++) {
-                    System.out.println((i + 1) + ". " + list.get(i).getName() + " " + list.get(i).getSurname());
+                for (int i = 0; i < employees.getList().size(); i++) {
+                    System.out.println((i + 1) + ". " + employees.getList().get(i).getName() + " " + employees.getList().get(i).getSurname());
                 }
                 
-                System.out.println((list.size() + 1) + ". Return to the Menu");
+                System.out.println((employees.getList().size() + 1) + ". Return to the Menu");
                 System.out.print("\n>");
                 String line = scanner.nextLine().trim();
                 Integer i;
@@ -243,8 +246,8 @@ public class DataController {
                 try {
                     i = Integer.valueOf(line) - 1;
     
-                    if (i >= 0 && i < list.size()) {
-                        Employee employee = list.get(i);
+                    if (i >= 0 && i < employees.getList().size()) {
+                        Employee employee = employees.getList().get(i);
 
                         System.out.println("\n1. ID: " + employee.getId()
                         + "\n2. Surname: " + employee.getSurname()
@@ -254,7 +257,7 @@ public class DataController {
                         + "\n6. Experience: " + employee.getExperience()
                         + "\n7. City: " + employee.getCity());
                         
-                    } else if (i == list.size()) {
+                    } else if (i == employees.getList().size()) {
                         MenuController.printReturn();
                     } else {
                         MenuController.printInvalid();
@@ -271,19 +274,19 @@ public class DataController {
         if (FileController.getFilePath() == null) {
             System.out.println("\nNo file open!");
         } else {            
-            if (list.size() == 0) {
-                System.out.println("\nNo data found!");
+            if (employees.getList().size() == 0) {
+                System.out.println("\nNo employees found!");
             } else {
-                ArrayList<Employee> listUnexperienced = new ArrayList<Employee>();
+                ArrayList<Employee> listUnexperienced = new ArrayList<>();
 
-                for (int i = 0; i < list.size(); i++) {
-                    if (list.get(i).getExperience() < 10) {
-                        listUnexperienced.add(list.get(i));
+                for (int i = 0; i < employees.getList().size(); i++) {
+                    if (employees.getList().get(i).getExperience() < 10) {
+                        listUnexperienced.add(employees.getList().get(i));
                     }
                 }
 
                 if (listUnexperienced.size() == 0) {
-                    System.out.println("\nNo data found!");
+                    System.out.println("\nNo employees found!");
                 } else {
                     System.out.println();
         
@@ -323,4 +326,5 @@ public class DataController {
             }
         }
     }
+    
 }

@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.FileInputStream;
@@ -30,8 +29,8 @@ public class FileController {
         if (fileName.length() == 0) {
             System.out.println("\nFile name can not be empty!");
         } else {
-            fileName = fileName + ".employee";
-            File file = new File("employee/" + fileName);
+            fileName = fileName + ".data";
+            File file = new File("data/" + fileName);
         
             if (file.exists()) {
                 System.out.println("\nFile already exists: " + fileName + "!");
@@ -52,12 +51,12 @@ public class FileController {
             }
         }
     }
-    @SuppressWarnings("unchecked")
+
     public static void fileOpen(Scanner scanner) {
         if (filePath != null) {
             System.out.println("\nAlready open: " +getFileName() + "!");
         } else {
-            File folder = new File("employee");
+            File folder = new File("data");
             File[] list = folder.listFiles();
             
             if (list == null || list.length == 0) {
@@ -83,7 +82,7 @@ public class FileController {
                             System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
                         } else {
                             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));) {
-                                DataController.setList((ArrayList<Employee>) ois.readObject());
+                                DataController.setData((Employees) ois.readObject());
                                 System.out.println("\nSuccessfully opened: " + list[i].getName() + "!");
                             } catch (Exception e) {
                                 System.out.println("\nAn error has occurred!\n");
@@ -110,10 +109,10 @@ public class FileController {
             System.out.println("\nNo file open!");
         } else { 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                oos.writeObject(DataController.getList());
+                oos.writeObject(DataController.getData());
                 System.out.println("\nSuccessfully saved: " + getFileName() + "!");
                 
-                DataController.clearList();
+                DataController.clearData();
                 filePath = null;
             } catch (Exception e) {
                 System.out.println("\nAn error has occurred!\n");
@@ -123,7 +122,7 @@ public class FileController {
     }
 
     public static void fileDelete(Scanner scanner) {
-        File folder = new File("employee");
+        File folder = new File("data");
         File[] list = folder.listFiles();
         
         if (list == null || list.length == 0) {
@@ -181,4 +180,5 @@ public class FileController {
             }
         }
     }
+    
 }
