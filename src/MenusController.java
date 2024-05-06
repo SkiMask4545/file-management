@@ -3,37 +3,12 @@ import java.util.Scanner;
 public class MenusController {
     private static Scanner scanner = new Scanner(System.in);
 
-    private static void printMainMenu() {
-        System.out.println("\nMENU"
-            + "\n1. File"
-            + "\n2. Data"
-            + "\n3. Exit");
-        System.out.print("\n>");
-    }
-
-    private static void printFileMenu() {
-        System.out.println("\nFILE"
-            + "\n1. New"
-            + "\n2. Open"
-            + "\n3. Save and Close"
-            + "\n4. Delete"
-            + "\n5. Return");
-        System.out.print("\n>");
-    }
-
-    private static void printDataMenu() {
-        System.out.println("\nDATA"
-            + "\n1. Add"
-            + "\n2. Change"
-            + "\n3. Remove"
-            + "\n4. Show All"
-            + "\n5. Show Unexperienced"
-            + "\n6. Return");
-        System.out.print("\n>");
-    }
-
     public static void printInvalid() {
         System.out.println("\nInvalid input!");
+    }
+
+    public static void printError() {
+        System.out.println("\nAn error has occurred!\n");
     }
 
     public static void printReturn() {
@@ -46,9 +21,10 @@ public class MenusController {
 
     private static void exit() {
         if (FilesController.getFilePath() != null) {
-            System.out.println("\nAre you sure to exit without saving: " + FilesController.getFileName() + "?"
-            + "\n1. Yes"
-            + "\n2. No");
+            System.out.println(
+                "\nAre you sure to exit without saving: " + FilesController.getFileName() + "?" +
+                "\n1. Yes" +
+                "\n2. No");
             System.out.print("\n>");
             String line = scanner.nextLine().trim();
 
@@ -65,7 +41,6 @@ public class MenusController {
                 default:
                 printInvalid();
             }
-
         } else {
             printExit();
             scanner.close();
@@ -73,9 +48,18 @@ public class MenusController {
         }
     }
 
-    private static void switchDataMenu() {
+    private static void dataMenu() {
         while (true) {
-            printDataMenu();
+            System.out.println(
+                "\nDATA" +
+                "\n1. Add" +
+                "\n2. Change" +
+                "\n3. Remove" +
+                "\n4. Show All" +
+                "\n5. Show Unexperienced" +
+                "\n6. Return");
+            System.out.print("\n>");
+
             String line = scanner.nextLine().trim();
         
             switch (line) {
@@ -92,7 +76,7 @@ public class MenusController {
                 break;
 
                 case "4":
-                DataController.dataShowAll(scanner);
+                DataController.dataShow(scanner);
                 break;
 
                 case "5":
@@ -106,17 +90,23 @@ public class MenusController {
                 default:
                 printInvalid();
             }
-
             if (line.equals("6")) {
                 break;
             }
-            
         }
     }
 
-    static void switchFileMenu() {
+    static void filesMenu() {
         while (true) {
-            printFileMenu();
+            System.out.println(
+                "\nFILE" +
+                "\n1. New" +
+                "\n2. Open" +
+                "\n3. Save and Close" +
+                "\n4. Delete" +
+                "\n5. Return");
+            System.out.print("\n>");
+
             String line = scanner.nextLine().trim();
         
             switch (line) {
@@ -143,26 +133,30 @@ public class MenusController {
                 default:
                 printInvalid();
             }
-
             if (line.equals("5")) {
                 break;
             }
         }
-
     }
 
-    static void switchMainMenu() {
+    static void mainMenu() {
         while (true) {
-            printMainMenu();
+            System.out.println(
+                "\nMENU" +
+                "\n1. File" +
+                "\n2. Data" +
+                "\n3. Exit");
+            System.out.print("\n>");
+
             String line = scanner.nextLine().trim();
             
             switch (line) {
                 case "1":
-                    switchFileMenu();
+                    filesMenu();
                     break;
 
                 case "2":
-                    switchDataMenu();
+                    dataMenu();
                     break;
 
                 case "3":
@@ -176,7 +170,6 @@ public class MenusController {
     }
 
     public static void display() {
-        switchMainMenu();
+        mainMenu();
     }
-
 }
