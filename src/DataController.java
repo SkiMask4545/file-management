@@ -81,6 +81,14 @@ public class DataController {
             return true;
         }
     }
+
+    public static String printNameSurname(Watch watch) {
+        return watch.getName() + " " + watch.getSurname();
+    }
+
+    public static String printNameSurname(Watches watches, int i) {
+        return watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname();
+    }
         
     public static void dataAdd(Scanner scanner) {
         if (!FilesController.checkFile()) {
@@ -93,11 +101,11 @@ public class DataController {
         inputData(scanner, watch);
 
         if (watches.getArrayList().add(watch)) {
-            System.out.println("\nSuccessfully added: " + watch.getName() + " " + watch.getSurname() + "!");
+            System.out.println("\nSuccessfully added: " + printNameSurname(watch) + "!");
 
             watches.setIdCounter(watches.getIdCounter() + 1);
         } else {
-            System.out.println("\nWas not added: " + watch.getName() + " " + watch.getSurname() + "!");
+            System.out.println("\nWas not added: " + printNameSurname(watch) + "!");
         }
     }
 
@@ -108,7 +116,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < watches.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(watches, i));
         }
         System.out.println((watches.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
@@ -123,7 +131,7 @@ public class DataController {
     
                 inputData(scanner, watch);
                 
-                System.out.println("\nSuccessfully changed: " + watch.getName() + " " + watch.getSurname() + "!");
+                System.out.println("\nSuccessfully changed: " + printNameSurname(watch) + "!");
             } else if (i == watches.getArrayList().size()) {
                 MenusController.printReturn();
             } else {
@@ -141,7 +149,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < watches.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(watches, i));
         }
         System.out.println((watches.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
@@ -152,7 +160,7 @@ public class DataController {
             i = Integer.valueOf(line) - 1;
 
             if (i >= 0 && i < watches.getArrayList().size()) {
-                System.out.println("\nAre you sure to remove: " + watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname() + "?"
+                System.out.println("\nAre you sure to remove: " + printNameSurname(watches, i) + "?"
                 + "\n1. Yes"
                 + "\n2. No");
                 System.out.print("\n>");
@@ -160,12 +168,12 @@ public class DataController {
 
                 switch (line) {
                     case "1":
-                    System.out.println("\nSuccessfully removed: " + watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname() + "!");
+                    System.out.println("\nSuccessfully removed: " + printNameSurname(watches, i) + "!");
                     watches.getArrayList().remove(i.intValue());
                     break;
 
                     case "2":
-                    System.out.println("\nWas not removed: " + watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname() + "!");
+                    System.out.println("\nWas not removed: " + printNameSurname(watches, i) + "!");
                     break;
 
                     default:
@@ -188,7 +196,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < watches.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(watches, i));
         }
         System.out.println((watches.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
@@ -229,7 +237,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < employeesUnexperienced.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + employeesUnexperienced.getArrayList().get(i).getName() + " " + employeesUnexperienced.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(employeesUnexperienced, i));
         }
         System.out.println((employeesUnexperienced.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
