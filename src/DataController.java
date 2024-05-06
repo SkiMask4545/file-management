@@ -81,6 +81,14 @@ public class DataController {
             return true;
         }
     }
+
+    public static String printNameSurname(Employee employee) {
+        return employee.getName() + " " + employee.getSurname();
+    }
+
+    public static String printNameSurname(Employees employees, int i) {
+        return employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname();
+    }
         
     public static void dataAdd(Scanner scanner) {
         if (!FilesController.checkFile()) {
@@ -93,11 +101,11 @@ public class DataController {
         inputData(scanner, employee);
 
         if (employees.getArrayList().add(employee)) {
-            System.out.println("\nSuccessfully added: " + employee.getName() + " " + employee.getSurname() + "!");
+            System.out.println("\nSuccessfully added: " + printNameSurname(employee) + "!");
 
             employees.setIdCounter(employees.getIdCounter() + 1);
         } else {
-            System.out.println("\nWas not added: " + employee.getName() + " " + employee.getSurname() + "!");
+            System.out.println("\nWas not added: " + printNameSurname(employee) + "!");
         }
     }
 
@@ -108,7 +116,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < employees.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(employees, i));
         }
         System.out.println((employees.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
@@ -123,7 +131,7 @@ public class DataController {
     
                 inputData(scanner, employee);
                 
-                System.out.println("\nSuccessfully changed: " + employee.getName() + " " + employee.getSurname() + "!");
+                System.out.println("\nSuccessfully changed: " + printNameSurname(employee) + "!");
             } else if (i == employees.getArrayList().size()) {
                 MenusController.printReturn();
             } else {
@@ -141,7 +149,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < employees.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(employees, i));
         }
         System.out.println((employees.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
@@ -152,7 +160,7 @@ public class DataController {
             i = Integer.valueOf(line) - 1;
 
             if (i >= 0 && i < employees.getArrayList().size()) {
-                System.out.println("\nAre you sure to remove: " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname() + "?"
+                System.out.println("\nAre you sure to remove: " + printNameSurname(employees, i) + "?"
                 + "\n1. Yes"
                 + "\n2. No");
                 System.out.print("\n>");
@@ -160,12 +168,12 @@ public class DataController {
 
                 switch (line) {
                     case "1":
-                    System.out.println("\nSuccessfully removed: " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname() + "!");
+                    System.out.println("\nSuccessfully removed: " + printNameSurname(employees, i) + "!");
                     employees.getArrayList().remove(i.intValue());
                     break;
 
                     case "2":
-                    System.out.println("\nWas not removed: " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname() + "!");
+                    System.out.println("\nWas not removed: " + printNameSurname(employees, i) + "!");
                     break;
 
                     default:
@@ -188,7 +196,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < employees.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + employees.getArrayList().get(i).getName() + " " + employees.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(employees, i));
         }
         System.out.println((employees.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
@@ -229,7 +237,7 @@ public class DataController {
         System.out.println();
 
         for (int i = 0; i < employeesUnexperienced.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + employeesUnexperienced.getArrayList().get(i).getName() + " " + employeesUnexperienced.getArrayList().get(i).getSurname());
+            System.out.println((i + 1) + ". " + printNameSurname(employeesUnexperienced, i));
         }
         System.out.println((employeesUnexperienced.getArrayList().size() + 1) + ". Return");
         System.out.print("\n>");
