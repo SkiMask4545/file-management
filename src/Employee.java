@@ -66,5 +66,4 @@ public class Employee implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
-    
 }
