@@ -18,5 +18,4 @@ public class Employees implements Serializable {
     public void setIdCounter(int idCounter) {
         this.idCounter = idCounter;
     }
-
 }
