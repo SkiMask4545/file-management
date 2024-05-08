@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class Watch implements Serializable {
-    enum Type {
+    protected enum Type {
         SMART("Smart"),
         ELECTRONIC("Electronic"),
         MECHANICAL("Mechanical");
@@ -16,7 +16,6 @@ public class Watch implements Serializable {
         public String toString() {
             return this.string;
         }
-
     }
 
     private static final long serialVersionUID = 1L;
@@ -57,32 +56,113 @@ public class Watch implements Serializable {
         return this.year;
     }
 
-    public void setId(int id) {
+    protected void setId(int id) {
         this.id = id;
     }
 
-    public void setCompany(String company) {
+    protected void setCompany(String company) {
         this.company = company;
     }
 
-    public void setModel(String model) {
+    protected void setModel(String model) {
         this.model = model;
     }
 
-    public void setType(Type type) {
+    protected void setType(Type type) {
         this.type = type;
     }
 
-    public void setPrice(double price) {
+    protected void setPrice(double price) {
         this.price = price;
     }
 
-    public void setCountry(String country) {
+    protected void setCountry(String country) {
         this.country = country;
     }
 
-    public void setYear(int year) {
+    protected void setYear(int year) {
         this.year = year;
     }
 
+    public String returnDataFields() {
+        return this.company + " " + this.model;
+    }
+
+    public void printlnDataFields() {
+        System.out.println(
+            "\n1. ID: " + this.id +
+            "\n2. Company: " + this.company +
+            "\n3. Model: " + this.model +
+            "\n4. Type: " + this.type +
+            "\n5. Price: " + this.price +
+            "\n6. Country: " + this.country +
+            "\n7. Year: " + this.year);
+    }
+
+    public void inputDataFields() {
+        String line;
+        
+        System.out.print("\nInput Company: ");
+        setCompany(MenuController.returnScannerNextLineTrim());
+
+        System.out.print("Input Model: ");
+        setModel(MenuController.returnScannerNextLineTrim());
+
+        System.out.println(
+            "\nSelect Type: " +
+            "\n1. " + Type.ELECTRONIC +
+            "\n2. " + Type.MECHANICAL);
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
+    
+        switch (line) {
+            case "1":
+                setType(Type.ELECTRONIC);
+                break;
+
+            case "2":
+                setType(Type.MECHANICAL);
+                break;
+
+            default:
+                MenuController.printlnInvalid();
+        }
+
+        System.out.print("Input Price: ");
+        Double price;
+    
+        try {
+            price = Double.valueOf(MenuController.returnScannerNextLineTrim());
+
+            if (price >= 0) {
+                setPrice(price);
+            } else {
+                MenuController.printlnInvalid();
+                System.out.println();
+            }
+        } catch (Exception e) {
+            MenuController.printlnInvalid();
+            System.out.println();
+        }
+
+        System.out.print("Input Country: ");
+        setCountry(MenuController.returnScannerNextLineTrim());
+
+        System.out.print("Input Year: ");
+        Integer year;
+    
+        try {
+            year = Integer.valueOf(MenuController.returnScannerNextLineTrim());
+
+            if (year >= 0) {
+                setYear(year);
+            } else {
+                MenuController.printlnInvalid();
+                System.out.println();
+            }
+        } catch (Exception e) {
+            MenuController.printlnInvalid();
+            System.out.println();
+        }
+    }
 }

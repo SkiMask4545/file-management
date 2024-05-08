@@ -1,263 +1,324 @@
-import java.util.Scanner;
-
 public class DataController {
-    private static Watches watches = new Watches();
+    private static Data data = new Data();
 
-    public static Watches getData() {
-        return watches;
+    public static Data getData() {
+        return DataController.data;
     }
 
-    public static void setData(Watches watches) {
-        DataController.watches = watches;
+    public static void setData(Data data) {
+        DataController.data = data;
     }
 
     public static void clearData() {
-        watches.getArrayList().clear();
-        watches.setIdCounter(1);
+        getData().getArrayList().clear();
+        getData().setIdCounter(0);
     }
 
-    public static void printData(Watch watch) {
-        System.out.println(
-            "\n1. ID: " + watch.getId() +
-            "\n2. Surname: " + watch.getSurname() +
-            "\n3. Name: " + watch.getName() +
-            "\n4. Ttile: " + watch.getTitle() +
-            "\n5. Salary: " + watch.getSalary() +
-            "\n6. Experience: " + watch.getExperience() +
-            "\n7. City: " + watch.getCity());
-    }
+    public static void addData(Watch watch) {
+        watch.setId(getData().getIdCounter() + 1);
+        watch.inputDataFields();
 
-    public static void inputData(Scanner scanner, Watch watch) {
-        System.out.print("\nInput Surname: ");
-        watch.setSurname(scanner.nextLine().trim());
+        if (getData().getArrayList().add(watch)) {
+            System.out.println("\nSuccessfully added: " + watch.returnDataFields() + "!");
 
-        System.out.print("Input Name: ");
-        watch.setName(scanner.nextLine().trim());
-
-        System.out.print("Input Title: ");
-        watch.setTitle(scanner.nextLine().trim());
-
-        System.out.print("Input Salary: ");
-        Double salary;
-    
-        try {
-            salary = Double.valueOf(scanner.nextLine().trim());
-
-            if (salary >= 0) {
-                watch.setSalary(salary);
-            } else {
-                MenusController.printInvalid();
-                System.out.println();
-            }
-        } catch (Exception e) {
-            MenusController.printInvalid();
-            System.out.println();
-        }
-        System.out.print("Input Experience: ");
-        Integer experience;
-    
-        try {
-            experience = Integer.valueOf(scanner.nextLine().trim());
-
-            if (experience >= 0) {
-                watch.setExperience(experience);
-            } else {
-                MenusController.printInvalid();
-                System.out.println();
-            }
-        } catch (Exception e) {
-            MenusController.printInvalid();
-            System.out.println();
-        }
-        System.out.print("Input City: ");
-        watch.setCity(scanner.nextLine().trim());
-    }
-
-    public static boolean checkData(Watches watches) {
-        if (watches.getArrayList().size() == 0) {
-            System.out.println("\nNo watches found!");
-            return false;
+            getData().setIdCounter(getData().getIdCounter() + 1);
         } else {
-            return true;
+            System.out.println("\nWas not added: " + watch.returnDataFields() + "!");
         }
     }
 
-    public static String printNameSurname(Watch watch) {
-        return watch.getName() + " " + watch.getSurname();
-    }
+    public static void addData() {
+        String line;
 
-    public static String printNameSurname(Watches watches, int i) {
-        return watches.getArrayList().get(i).getName() + " " + watches.getArrayList().get(i).getSurname();
-    }
+        if (!FileController.checkFileOpen()) {
+            return;
+        }
+
+        while (true) {
+            System.out.println(
+                "\nSelect item to add: " +
+                "\n1. Watch" +
+                "\n2. Smart Watch" +
+                "\n3. Return");
+            MenuController.printCmd();
+            line = MenuController.returnScannerNextLineTrim();
         
-    public static void dataAdd(Scanner scanner) {
-        if (!FilesController.checkFile()) {
-            return;
-        }
-        Watch watch = new Watch();
+            switch (line) {
+                case "1":
+                    Watch watch = new Watch();
+                    addData(watch);
+                    break;
 
-        watch.setId(watches.getIdCounter());
+                case "2":
+                    while (true) {
+                        System.out.println(
+                            "\nSelect item to add: " +
+                            "\n1. Smart Watch" +
+                            "\n2. Samsung Smart Watch" +
+                            "\n3. Return");
+                        MenuController.printCmd();
+                        line = MenuController.returnScannerNextLineTrim();
+                    
+                        switch (line) {
+                            case "1":
+                                WatchSmart watchSmart = new WatchSmart();
+                                addData(watchSmart);
+                                break;
+            
+                            case "2":
+                                while (true) {
+                                    System.out.println(
+                                        "\nSelect item to add: " +
+                                        "\n1. Samsung Smart Watch" +
+                                        "\n2. Return");
+                                    MenuController.printCmd();
+                                    line = MenuController.returnScannerNextLineTrim();
+                                
+                                    switch (line) {
+                                        case "1":
+                                            WatchSmartSamsung watchSmartSamsung = new WatchSmartSamsung();
+                                            addData(watchSmartSamsung);
+                                            break;
+                        
+                                        case "2":
+                                            MenuController.printlnReturn();
+                                            break;
+                        
+                                        default:
+                                            MenuController.printlnInvalid();
+                                    }
+                                    if (line.equals("1") || line.equals("2")) {
+                                        break;
+                                    }
+                                }
+                                break;
+            
+                            case "3":
+                                MenuController.printlnReturn();
+                                break;
+            
+                            default:
+                                MenuController.printlnInvalid();
+                        }
+                        if (line.equals("1") || line.equals("3")) {
+                            break;
+                        }
+                    }
+                    break;
 
-        inputData(scanner, watch);
+                case "3":
+                    MenuController.printlnReturn();
+                    break;
 
-        if (watches.getArrayList().add(watch)) {
-            System.out.println("\nSuccessfully added: " + printNameSurname(watch) + "!");
-
-            watches.setIdCounter(watches.getIdCounter() + 1);
-        } else {
-            System.out.println("\nWas not added: " + printNameSurname(watch) + "!");
+                default:
+                    MenuController.printlnInvalid();
+            }
+            if (line.equals("1") || line.equals("3")) {
+                break;
+            }
         }
     }
 
-    public static void dataChange(Scanner scanner) {
-        if (!FilesController.checkFile() || !checkData(watches)) {
+    public static void changeData() {
+        String line;
+
+        if (!FileController.checkFileOpen() || !getData().checkDataExist()) {
             return;
         }
         System.out.println();
 
-        for (int i = 0; i < watches.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + printNameSurname(watches, i));
+        for (int i = 0; i < getData().getArrayList().size(); i++) {
+            System.out.println((i + 1) + ". " + getData().getArrayList().get(i).returnDataFields());
         }
-        System.out.println((watches.getArrayList().size() + 1) + ". Return");
-        System.out.print("\n>");
-        String line = scanner.nextLine().trim();
+        System.out.println((getData().getArrayList().size() + 1) + ". Return");
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
         Integer i;
 
         try {
             i = Integer.valueOf(line) - 1;
 
-            if (i >= 0 && i < watches.getArrayList().size()) {
-                Watch watch = watches.getArrayList().get(i);
-    
-                inputData(scanner, watch);
+            if (i >= 0 && i < getData().getArrayList().size()) {
+                getData().getArrayList().get(i).inputDataFields();
                 
-                System.out.println("\nSuccessfully changed: " + printNameSurname(watch) + "!");
-            } else if (i == watches.getArrayList().size()) {
-                MenusController.printReturn();
+                System.out.println("\nSuccessfully changed: " + getData().getArrayList().get(i).returnDataFields() + "!");
+            } else if (i == getData().getArrayList().size()) {
+                MenuController.printlnReturn();
             } else {
-                MenusController.printInvalid();
+                MenuController.printlnInvalid();
             }
         } catch (Exception e) {
-            MenusController.printInvalid();
+            MenuController.printlnError();
+            e.printStackTrace();
         }
     }
 
-    public static void dataRemove(Scanner scanner) {
-        if (!FilesController.checkFile() || !checkData(watches)) {
+    public static void removeData() {
+        String line;
+
+        if (!FileController.checkFileOpen() || !data.checkDataExist()) {
             return;
         }
         System.out.println();
 
-        for (int i = 0; i < watches.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + printNameSurname(watches, i));
+        for (int i = 0; i < getData().getArrayList().size(); i++) {
+            System.out.println((i + 1) + ". " + getData().getArrayList().get(i).returnDataFields());
         }
-        System.out.println((watches.getArrayList().size() + 1) + ". Return");
-        System.out.print("\n>");
-        String line = scanner.nextLine().trim();
+        System.out.println((getData().getArrayList().size() + 1) + ". Return");
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
         Integer i;
 
         try {
             i = Integer.valueOf(line) - 1;
 
-            if (i >= 0 && i < watches.getArrayList().size()) {
-                System.out.println("\nAre you sure to remove: " + printNameSurname(watches, i) + "?"
+            if (i >= 0 && i < getData().getArrayList().size()) {
+                System.out.println("\nAre you sure to remove: " + getData().getArrayList().get(i).returnDataFields() + "?"
                 + "\n1. Yes"
                 + "\n2. No");
-                System.out.print("\n>");
-                line = scanner.nextLine().trim();
+                MenuController.printCmd();
+                line = MenuController.returnScannerNextLineTrim();
 
                 switch (line) {
                     case "1":
-                    System.out.println("\nSuccessfully removed: " + printNameSurname(watches, i) + "!");
-                    watches.getArrayList().remove(i.intValue());
+                    System.out.println("\nSuccessfully removed: " + getData().getArrayList().get(i).returnDataFields() + "!");
+                    getData().getArrayList().remove(i.intValue());
                     break;
 
                     case "2":
-                    System.out.println("\nWas not removed: " + printNameSurname(watches, i) + "!");
+                    System.out.println("\nWas not removed: " + getData().getArrayList().get(i).returnDataFields() + "!");
                     break;
 
                     default:
-                    MenusController.printInvalid();
+                    MenuController.printlnInvalid();
                 }
-            } else if (i == watches.getArrayList().size()) {
-                MenusController.printReturn();
+            } else if (i == getData().getArrayList().size()) {
+                MenuController.printlnReturn();
             } else {
-                MenusController.printInvalid();
+                MenuController.printlnInvalid();
             }
         } catch (Exception e) {
-            MenusController.printInvalid();
+            MenuController.printlnError();
+            e.printStackTrace();
         }
     }
 
-    public static void dataShow(Scanner scanner) {
-        if (!FilesController.checkFile() || !checkData(watches)) {
+    public static void showData() {
+        String line;
+
+        if (!FileController.checkFileOpen() || !data.checkDataExist()) {
             return;
         }
         System.out.println();
 
-        for (int i = 0; i < watches.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + printNameSurname(watches, i));
+        for (int i = 0; i < getData().getArrayList().size(); i++) {
+            System.out.println((i + 1) + ". " + getData().getArrayList().get(i).returnDataFields());
         }
-        System.out.println((watches.getArrayList().size() + 1) + ". Return");
-        System.out.print("\n>");
-        String line = scanner.nextLine().trim();
+        System.out.println((getData().getArrayList().size() + 1) + ". Return");
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
         Integer i;
 
         try {
             i = Integer.valueOf(line) - 1;
 
-            if (i >= 0 && i < watches.getArrayList().size()) {
-                Watch watch = watches.getArrayList().get(i);
-                printData(watch);
+            if (i >= 0 && i < getData().getArrayList().size()) {
+                getData().getArrayList().get(i).printlnDataFields();
                 
-            } else if (i == watches.getArrayList().size()) {
-                MenusController.printReturn();
+            } else if (i == getData().getArrayList().size()) {
+                MenuController.printlnReturn();
             } else {
-                MenusController.printInvalid();
+                MenuController.printlnInvalid();
             }
         } catch (Exception e) {
-            MenusController.printInvalid();
+            MenuController.printlnError();
+            e.printStackTrace();
         }
     }
 
-    public static void dataShowUnexperienced(Scanner scanner) {
-        if (!FilesController.checkFile() || !checkData(watches)) {
+    public static void showDataUSA() {
+        String line;
+
+        if (!FileController.checkFileOpen() || !data.checkDataExist()) {
             return;
         }
-        Watches employeesUnexperienced = new Watches();
+        Data dataUSA = new Data();
 
-        for (int i = 0; i < watches.getArrayList().size(); i++) {
-            if (watches.getArrayList().get(i).getExperience() < 10) {
-                employeesUnexperienced.getArrayList().add(watches.getArrayList().get(i));
+        for (int i = 0; i < getData().getArrayList().size(); i++) {
+            if (getData().getArrayList().get(i).getCountry().equals("USA")) {
+                dataUSA.getArrayList().add(getData().getArrayList().get(i));
             }
         }
-        if (!checkData(employeesUnexperienced)) {
+        if (!dataUSA.checkDataExist()) {
             return;
         }
         System.out.println();
 
-        for (int i = 0; i < employeesUnexperienced.getArrayList().size(); i++) {
-            System.out.println((i + 1) + ". " + printNameSurname(employeesUnexperienced, i));
+        for (int i = 0; i < dataUSA.getArrayList().size(); i++) {
+            System.out.println((i + 1) + ". " + dataUSA.getArrayList().get(i).returnDataFields());
         }
-        System.out.println((employeesUnexperienced.getArrayList().size() + 1) + ". Return");
-        System.out.print("\n>");
-        String line = scanner.nextLine().trim();
+        System.out.println((dataUSA.getArrayList().size() + 1) + ". Return");
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
         Integer i;
 
         try {
             i = Integer.valueOf(line) - 1;
 
-            if (i >= 0 && i < employeesUnexperienced.getArrayList().size()) {
-                Watch watch = employeesUnexperienced.getArrayList().get(i);
-                printData(watch);
+            if (i >= 0 && i < getData().getArrayList().size()) {
+                dataUSA.getArrayList().get(i).printlnDataFields();
                 
-            } else if (i == employeesUnexperienced.getArrayList().size()) {
-                MenusController.printReturn();
+            } else if (i == dataUSA.getArrayList().size()) {
+                MenuController.printlnReturn();
             } else {
-                MenusController.printInvalid();
+                MenuController.printlnInvalid();
             }
         } catch (Exception e) {
-            MenusController.printInvalid();
+            MenuController.printlnError();
+            e.printStackTrace();
+        }
+    }
+
+    public static void showDataSmart() {
+        String line;
+
+        if (!FileController.checkFileOpen() || !data.checkDataExist()) {
+            return;
+        }
+        Data dataSmart = new Data();
+
+        for (int i = 0; i < getData().getArrayList().size(); i++) {
+            if (getData().getArrayList().get(i).getType().toString().equals("Smart")) {
+                dataSmart.getArrayList().add(getData().getArrayList().get(i));
+            }
+        }
+        if (!dataSmart.checkDataExist()) {
+            return;
+        }
+        System.out.println();
+
+        for (int i = 0; i < dataSmart.getArrayList().size(); i++) {
+            System.out.println((i + 1) + ". " + dataSmart.getArrayList().get(i).returnDataFields());
+        }
+        System.out.println((dataSmart.getArrayList().size() + 1) + ". Return");
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
+        Integer i;
+
+        try {
+            i = Integer.valueOf(line) - 1;
+
+            if (i >= 0 && i < getData().getArrayList().size()) {
+                dataSmart.getArrayList().get(i).printlnDataFields();
+                
+            } else if (i == dataSmart.getArrayList().size()) {
+                MenuController.printlnReturn();
+            } else {
+                MenuController.printlnInvalid();
+            }
+        } catch (Exception e) {
+            MenuController.printlnError();
+            e.printStackTrace();
         }
     }
 }

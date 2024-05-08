@@ -1,11 +1,11 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Watches implements Serializable {
+public class Data implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private ArrayList<Watch> arrayList = new ArrayList<>();
-    private int idCounter = 1;
+    private int idCounter = 0;
 
     public ArrayList<Watch> getArrayList() {
         return this.arrayList;
@@ -19,4 +19,12 @@ public class Watches implements Serializable {
         this.idCounter = idCounter;
     }
 
+    public boolean checkDataExist() {
+        if (getArrayList().size() == 0) {
+            System.out.println("\nNo data found!");
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

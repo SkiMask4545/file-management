@@ -1,29 +1,32 @@
-import java.util.Scanner;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
 
-public class FilesController {
+public class FileController {
     private static String filePath;
 
     public static String getFilePath() {
-        return filePath;
+        return FileController.filePath;
     }
 
-    public static String getFileName() {
-        File file = new File(filePath);
+    private static void setFilePath(String filePath) {
+        FileController.filePath = filePath;
+    }
+
+    public static String getFilePathName() {
+        File file = new File(getFilePath());
         return file.getName();
     }
 
     public static long getFileLength() {
-        File file = new File(filePath);
+        File file = new File(getFilePath());
         return file.length();
     }
 
-    public static boolean checkFile() {
-        if (filePath == null) {
+    public static boolean checkFileOpen() {
+        if (getFilePath() == null) {
             System.out.println("\nNo file open!");
             return false;
         } else {
@@ -31,7 +34,7 @@ public class FilesController {
         }
     }
 
-    public static boolean checkFiles(File[] fileList) {
+    public static boolean checkFilesExist(File[] fileList) {
         if (fileList == null || fileList.length == 0) {
             System.out.println("\nNo files found!");
             return false;
@@ -40,9 +43,9 @@ public class FilesController {
         }
     }
     
-    public static void fileNew(Scanner scanner) {
+    public static void createFile() {
         System.out.print("\nEnter file name: ");
-        String fileName = scanner.nextLine().trim();
+        String fileName = MenuController.returnScannerNextLineTrim();
         
         if (fileName.length() == 0) {
             System.out.println("\nFile name can not be empty!");
@@ -62,21 +65,23 @@ public class FilesController {
                         System.out.println("\nWas not created: " + fileName + "!");
                     }
                 } catch (Exception e) {
-                    MenusController.printError();
-                    System.out.println(e.getMessage());
+                    MenuController.printlnError();
+                    e.printStackTrace();
                 }
             }
         }
     }
 
-    public static void fileOpen(Scanner scanner) {
-        if (filePath != null) {
-            System.out.println("\nAlready open: " +getFileName() + "!");
+    public static void openFile() {
+        String line;
+
+        if (getFilePath() != null) {
+            System.out.println("\nAlready open: " +getFilePathName() + "!");
         } else {
             File fileFolder = new File("files");
             File[] fileList = fileFolder.listFiles();
             
-            if (!checkFiles(fileList)) {
+            if (!checkFilesExist(fileList)) {
                 return;
             }
             System.out.println();
@@ -85,60 +90,61 @@ public class FilesController {
                 System.out.println((i + 1) + ". " + fileList[i].getName());
             }
             System.out.println((fileList.length + 1) + ". Return");
-            System.out.print("\n>");
-            String line = scanner.nextLine().trim();
+            MenuController.printCmd();
+            line = MenuController.returnScannerNextLineTrim();
             Integer i;
 
             try {
                 i = Integer.valueOf(line) - 1;
 
                 if (i >= 0 && i < fileList.length) {
-                    filePath = fileList[i].getCanonicalPath();
+                    setFilePath(fileList[i].getCanonicalPath());
 
                     if (getFileLength() == 0) {
                         System.out.println("\nSuccessfully opened: " + fileList[i].getName() + "!");
                     } else {
-                        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));) {
-                            DataController.setData((Watches) ois.readObject());
+                        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(getFilePath()));) {
+                            DataController.setData((Data) ois.readObject());
                             System.out.println("\nSuccessfully opened: " + fileList[i].getName() + "!");
                         } catch (Exception e) {
-                            MenusController.printError();
-                            System.out.println(e.getMessage());
+                            MenuController.printlnError();
+                            e.printStackTrace();
                         }
                     }
                 } else if (i == fileList.length) {
-                    MenusController.printReturn();
+                    MenuController.printlnReturn();
                 } else {
-                    MenusController.printInvalid();
+                    MenuController.printlnInvalid();
                 }
             } catch (Exception e) {
-                MenusController.printError();
-                System.out.println(e.getMessage());
+                MenuController.printlnError();
+                e.printStackTrace();
             }
         }
     }
 
-    public static void fileSaveAndClose() {
-        if (!checkFile()) {
+    public static void saveAndCloseFile() {
+        if (!checkFileOpen()) {
             return;
         }
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(getFilePath()))) {
             oos.writeObject(DataController.getData());
-            System.out.println("\nSuccessfully saved: " + getFileName() + "!");
+            System.out.println("\nSuccessfully saved and closed: " + getFilePathName() + "!");
             
             DataController.clearData();
-            filePath = null;
+            setFilePath(null);
         } catch (Exception e) {
-            MenusController.printError();
-            System.out.println(e.getMessage());
+            MenuController.printlnError();
+            e.printStackTrace();
         }
     }
 
-    public static void fileDelete(Scanner scanner) {
+    public static void deleteFile() {
+        String line;
         File fileFolder = new File("files");
         File[] fileList = fileFolder.listFiles();
         
-        if (!checkFiles(fileList)) {
+        if (!checkFilesExist(fileList)) {
             return;
         }
         System.out.println();
@@ -147,22 +153,22 @@ public class FilesController {
             System.out.println((i + 1) + ". " + fileList[i].getName());
         }
         System.out.println((fileList.length + 1) + ". Return");
-        System.out.print("\n>");
-        String line = scanner.nextLine().trim();
+        MenuController.printCmd();
+        line = MenuController.returnScannerNextLineTrim();
         Integer i;
 
         try {
             i = Integer.valueOf(line) - 1;
 
             if (i >= 0 && i < fileList.length) {
-                if (filePath != null && filePath.equals(fileList[i].getCanonicalPath())) {
+                if (getFilePath() != null && getFilePath().equals(fileList[i].getCanonicalPath())) {
                     System.out.println("\nAlready open: " + fileList[i].getName() + "!");
                 } else {
                     System.out.println("\nAre you sure to delete: " + fileList[i].getName() + "?"
                     + "\n1. Yes"
                     + "\n2. No");
-                    System.out.print("\n>");
-                    line = scanner.nextLine().trim();
+                    MenuController.printCmd();
+                    line = MenuController.returnScannerNextLineTrim();
 
                     switch (line) {
                         case "1":
@@ -178,17 +184,17 @@ public class FilesController {
                         break;
 
                         default:
-                        MenusController.printInvalid();
+                        MenuController.printlnInvalid();
                     }
                 }
             } else if (i == fileList.length) {
-                MenusController.printReturn();
+                MenuController.printlnReturn();
             } else {
-                MenusController.printInvalid();
+                MenuController.printlnInvalid();
             }
         } catch (Exception e) {
-            MenusController.printError();
-            System.out.println(e.getMessage());
+            MenuController.printlnError();
+            e.printStackTrace();
         }
     }
 }
