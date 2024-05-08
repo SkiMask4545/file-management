@@ -90,13 +90,13 @@ public class Watch implements Serializable {
 
     public void printlnDataFields() {
         System.out.println(
-            "\n1. ID: " + this.id +
-            "\n2. Company: " + this.company +
-            "\n3. Model: " + this.model +
-            "\n4. Type: " + this.type +
-            "\n5. Price: " + this.price +
-            "\n6. Country: " + this.country +
-            "\n7. Year: " + this.year);
+            "\n1. ID: " + getId() +
+            "\n2. Company: " + getCompany() +
+            "\n3. Model: " + getModel() +
+            "\n4. Type: " + getType() +
+            "\n5. Price: " + getPrice() +
+            "\n6. Country: " + getCountry() +
+            "\n7. Year: " + getYear());
     }
 
     public void inputDataFields() {
